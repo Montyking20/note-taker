@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid');
 
-// Opens DB for either GET or POST
+// DB for GET and POST
 const db = fs.readFileSync('./db/db.json', 'utf8')
 const dataJSON = JSON.parse(db)
 
@@ -16,7 +16,7 @@ const writer = (newNotes) => {
     })
 }
 
-// POST handler for new note
+// New note
 const newNote = (req, res, next) => {
     const note = req.body
     note.id = uuidv4()
@@ -25,12 +25,12 @@ const newNote = (req, res, next) => {
     writer(newNotes)
 };
 
-// GET returns notes 
+// Returns notes 
 const getNotes = (req, res, next) => {
     res.send(dataJSON)
 };
 
-// Handles Delete of note
+// Deletes note
 const removeNote = (req, res, next) => {
     const noteID = req.params.id
     const noteIndex = dataJSON.findIndex(x => x.id === noteID);
